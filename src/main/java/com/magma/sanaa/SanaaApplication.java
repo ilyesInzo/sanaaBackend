@@ -16,20 +16,4 @@ public class SanaaApplication {
         SpringApplication.run(SanaaApplication.class, args);
     }
 
-
-    @Bean
-    public CommandLineRunner demo(UserService userService) {
-        return (args) -> {
-
-            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String encodedPassword = passwordEncoder.encode("abcd");
-
-            User user = new User();
-            user.setPassword(encodedPassword);
-            user.setEmail("inzodialo@gmail.com");
-            userService.saveUser(user);
-
-        };
-    }
-
 }
