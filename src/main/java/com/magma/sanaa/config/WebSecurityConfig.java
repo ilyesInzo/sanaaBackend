@@ -51,12 +51,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     //Todo create test profile and disable security
     // used currently for easy test
-    /*
-    @Override
+
+    /*@Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/**");
-    }
-    */
+    }*/
+
 }
 
 

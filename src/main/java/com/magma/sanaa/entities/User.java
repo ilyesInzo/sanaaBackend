@@ -1,13 +1,6 @@
 package com.magma.sanaa.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "T_User")
@@ -33,6 +26,9 @@ public class User {
     @Version
     private long version;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "Rle_Id", referencedColumnName = "Rle_Id", nullable = false)
+    private Role role;
 
     public Integer getId() {
         return id;
@@ -72,6 +68,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

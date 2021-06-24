@@ -1,8 +1,6 @@
 package com.magma.sanaa.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-
 
 public class JwtTokenEnhancer extends JwtAccessTokenConverter {
 
@@ -11,6 +9,5 @@ public class JwtTokenEnhancer extends JwtAccessTokenConverter {
         super.setSigningKey(privateKey);
         super.setVerifierKey(publicKey);
     }
-
 
 }
