@@ -32,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService).passwordEncoder(encoder());
     }
 
+
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -39,7 +40,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
         httpSecurity
                 .authorizeRequests().antMatchers("/hello").permitAll()
@@ -47,6 +51,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.csrf().disable();
+
+    }
+    //Todo create test profile and disable security
+    // used currently for easy test
+
+    /*@Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/**");
+    }*/
 
     }
     //Todo create test profile and disable security
