@@ -1,3 +1,4 @@
+
 INSERT INTO T_Permission (Prm_Id, Prm_Name, version) VALUES (
    1, 'User', 0);
 INSERT INTO T_Permission (Prm_Id, Prm_Name, version) VALUES (
