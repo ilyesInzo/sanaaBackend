@@ -1,4 +1,4 @@
-package com.magma.sanaa.config;
+package com.magma.sanaa.Utils;
 
 public class ConstantsHelper {
 

@@ -1,5 +1,6 @@
 package com.magma.sanaa.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -12,22 +13,22 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-
-    private static final String RESOURCE_ID = "resource_id";
+    @Autowired
+    private ApplicationProperties applicationProperties;
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
-        resources.resourceId(RESOURCE_ID).stateless(false);
+        resources.resourceId(applicationProperties.getResourceID()).stateless(false);
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().antMatchers("/hello").permitAll()
+                .authorizeRequests().antMatchers("/hello","/oauth/token").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 
-        http.csrf().disable();
+        http.cors().and().csrf().disable();
 
     }
 }
