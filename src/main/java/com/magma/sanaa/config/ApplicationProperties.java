@@ -11,6 +11,7 @@ public class ApplicationProperties {
     private String publicKey;
     private String clientID;
     private String clientSecret;
+    private String resourceID;
 
     public String getPrivateKey() {
         return privateKey;
@@ -44,6 +45,11 @@ public class ApplicationProperties {
         this.clientSecret = clientSecret;
     }
 
+    public String getResourceID() {
+        return resourceID;
+    }
 
-
+    public void setResourceID(String resourceID) {
+        this.resourceID = resourceID;
+    }
 }

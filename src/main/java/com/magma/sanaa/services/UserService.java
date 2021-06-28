@@ -1,7 +1,6 @@
 package com.magma.sanaa.services;
 
-import com.magma.sanaa.config.ConstantsHelper;
-import com.magma.sanaa.entities.Permission;
+import com.magma.sanaa.Utils.ConstantsHelper;
 import com.magma.sanaa.entities.RolePermission;
 import com.magma.sanaa.entities.User;
 import com.magma.sanaa.repositories.IUserRepository;
@@ -40,6 +39,16 @@ public class UserService implements UserDetailsService {
     public User saveUser(User user) {
 
         return userRepository.save(user);
+    }
+
+    public boolean deleteUser(Integer id) {
+
+        if (userRepository.findById(id).isPresent()){
+
+            userRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.magma.sanaa.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,13 +21,13 @@ public class User {
 
     @Column(name = "Usr_LastName")
     private String lastName;
-
+    @JsonIgnore
     @Column(name = "Usr_Password")
     private String password;
 
     @Version
     private long version;
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Rle_Id", referencedColumnName = "Rle_Id", nullable = false)
     private Role role;
