@@ -1,18 +1,13 @@
 package com.magma.sanaa.services;
 
-import com.magma.sanaa.Utils.ConstantsHelper;
-import com.magma.sanaa.entities.RolePermission;
 import com.magma.sanaa.entities.User;
 import com.magma.sanaa.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -52,41 +47,11 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findUserByEmail(userEmail);
+    public CustomUserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
+        User user = userRepository.findUserByEmail(userEmail)
+                .orElseThrow( () -> new UsernameNotFoundException("Invalid username or password."));
 
-        if(!user.isPresent()){
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-        User currentUser = user.get();
-
-        return new org.springframework.security.core.userdetails.User(currentUser.getEmail(), currentUser.getPassword(), getAuthority(currentUser));
-    }
-
-    private List<SimpleGrantedAuthority> getAuthority(User currentUser) {
-
-        return currentUser.getRole().getRolePermissions().stream()
-                .map( rp ->
-                     fromPermissionToAuthorities(rp)
-                ).flatMap(Collection::stream)
-                .collect(Collectors.toList());
-    }
-
-    private List<SimpleGrantedAuthority> fromPermissionToAuthorities(RolePermission rolePermission){
-        List<SimpleGrantedAuthority> simpleAuthorities = new ArrayList<>();
-        if (rolePermission.isCreate()) {
-            simpleAuthorities.add(new SimpleGrantedAuthority(ConstantsHelper.ROLE + ConstantsHelper.UNDERSCORE + rolePermission.getPermission().getName() + ConstantsHelper.UNDERSCORE + ConstantsHelper.CREATE));
-        }
-        if (rolePermission.isWrite()) {
-            simpleAuthorities.add(new SimpleGrantedAuthority(ConstantsHelper.ROLE + ConstantsHelper.UNDERSCORE + rolePermission.getPermission().getName() + ConstantsHelper.UNDERSCORE + ConstantsHelper.WRITE));
-        }
-        if (rolePermission.isRead()) {
-            simpleAuthorities.add(new SimpleGrantedAuthority(ConstantsHelper.ROLE + ConstantsHelper.UNDERSCORE + rolePermission.getPermission().getName() + ConstantsHelper.UNDERSCORE + ConstantsHelper.READ));
-        }
-        if (rolePermission.isDelete()) {
-            simpleAuthorities.add(new SimpleGrantedAuthority(ConstantsHelper.ROLE + ConstantsHelper.UNDERSCORE + rolePermission.getPermission().getName() + ConstantsHelper.UNDERSCORE + ConstantsHelper.DELETE));
-        }
-        return simpleAuthorities;
+        return CustomUserDetails.build(user);
     }
 
 }
