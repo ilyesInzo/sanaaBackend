@@ -17,6 +17,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping(value = "/currentUser")
+    public User getCurrentUser(Authentication authentication) {
+        return userService.getUser(authentication.getName()).orElseThrow();
+
     @PreAuthorize("hasRole('User_Read')")
     @GetMapping(value = "/user")
     public List<User> getAllUsers() {
