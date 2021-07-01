@@ -17,7 +17,7 @@ INSERT INTO T_Rel_Role_Permission (Rle_Id, Prm_Id, Rel_Create, Rel_Write, Rel_Re
    1, 2, true ,true ,true ,true );
 
 INSERT INTO T_Rel_Role_Permission (Rle_Id, Prm_Id, Rel_Create, Rel_Write, Rel_Read, Rel_Delete) VALUES (
-   2, 1, false ,false ,false ,false );
+   2, 1, false ,false ,true ,false );
 
 INSERT INTO T_User (Usr_Id, Usr_Email, Usr_First_Name, Usr_Last_Name, Usr_Password, version, Rle_Id) VALUES (
    1, 'admin@gmail.com','inzo','dialo','$2a$10$rqxw1qSae5Z1l5RgtTWehOZilOZ8YVC0fLkNMcVmfjuou5tr/klFC',0, 1);
